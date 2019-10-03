@@ -24,7 +24,7 @@ def tensorize(smiles, assm=True):
 
     return mol_tree
 
-if __name__ == "__main__":
+def run():
     lg = rdkit.RDLogger.logger() 
     lg.setLevel(rdkit.RDLogger.CRITICAL)
 
@@ -52,3 +52,5 @@ if __name__ == "__main__":
         with open('tensors-%d.pkl' % split_id, 'wb') as f:
             pickle.dump(sub_data, f, pickle.HIGHEST_PROTOCOL)
 
+if __name__ == "__main__":
+    run()
