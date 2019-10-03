@@ -24,7 +24,7 @@ def tensorize(smiles, assm=True):
 
     return mol_tree
 
-def run():
+def run(train_path, nsplits, njobs):
     lg = rdkit.RDLogger.logger() 
     lg.setLevel(rdkit.RDLogger.CRITICAL)
 
@@ -32,13 +32,11 @@ def run():
     parser.add_option("-t", "--train", dest="train_path")
     parser.add_option("-n", "--split", dest="nsplits", default=10)
     parser.add_option("-j", "--jobs", dest="njobs", default=8)
-    opts,args = parser.parse_args()
-    opts.njobs = int(opts.njobs)
 
-    pool = Pool(opts.njobs)
-    num_splits = int(opts.nsplits)
+    pool = Pool(njobs)
+    num_splits = int(nsplits)
 
-    with open(opts.train_path) as f:
+    with open(train_path) as f:
         data = [line.strip("\r\n ").split()[0] for line in f]
 
     all_data = pool.map(tensorize, data)
